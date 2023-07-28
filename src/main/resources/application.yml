@@ -1,0 +1,7 @@
+#配置文件版本
+spring:
+  profiles:
+    active: pro
+
+#redis用于存储企业微信token
+redis_addr: 127.0.0.1

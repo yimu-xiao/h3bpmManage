@@ -1,0 +1,78 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<title>错误页面</title>
+		<style type="text/css">
+			.overflow {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: keep-all;
+			}
+			.page__hd{
+				margin-top: 50px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-break: keep-all;
+			}
+			div.header {
+				width: 100%;
+				position: fixed;
+				top: 0%;
+				background-color: whitesmoke;
+				height: 30px;
+				z-index: 100;
+			}
+
+			div.footer {
+				width: 100%;
+				position: fixed;
+				bottom: 0%;
+				background-color: whitesmoke;
+				z-index: 100;
+				font-size: 0.6em;
+				padding-bottom: 1%;
+			}
+		</style>
+	</head>
+
+	<body ontouchstart>
+		<div class="header">
+			<div class="overflow" style="left: 30%;font-size: larger;">DHR系统</div>
+			<div style="border: solid; border-color: green;clear: all;"></div>
+		</div>
+		<div class="page__hd">
+			<h1 class="page__title">错误提示页面</h1>
+		</div>
+		<div class="weui-form-preview">
+			<div class="weui-form-preview__hd">
+				<label class="weui-form-preview__label"></label>
+				<em class="weui-form-preview__value">
+					权限不足或系统错误！...
+				</em>
+			</div>
+			<div class="weui-form-preview__bd">
+				<div class="weui-form-preview__item">
+					<label class="weui-form-preview__label">建议进行如下操作步骤:</label>
+					<span class="weui-form-preview__value">--</span>
+					<div style="text-align: left;">
+						<li>1.退出该页面，点击"工作台"，找到“DHR系统”重新进入；</li>
+						<li>2.内网或VPN环境下登录：
+							<li>
+								<a href="...">中国人寿DHR系统</a>
+							</li>
+						</li>
+					</div>
+
+				</div>
+			</div>
+			<div class="footer">
+				<div style="border: solid; border-color: green;"></div>
+				<div style="text-align: center;color: #586C94;">金融科技部支持电话：5257</div>
+				<div style="text-align: center;color: #586C94;">国寿投资 版权所有</div>
+			</div>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+</head>
+<body>
+<!--		<span id="dhrUrl" th:text="${dhrUrl}"></span>-->
+<!--		<span id="encode" th:text="${encode}"></span>-->
+</body>
+<script>
+    // const dhrUrl = document.getElementById("dhrUrl").innerText;
+    const dhrUrl = "https://todo.guoshou.com/hcm/qx/app/gateway/GSTZEHR";
+    // const encode = document.getElementById("encode").innerText;
+    const encode = "7cv9mtDOwMKad9tL++NY4Ls9BZ5P7fgtvhTJ5EQgnjmYN7U0RfuSGYFgFFJMQ7huAX0AAXiiP3/B0NbPlarvSpjxe5TO2VaY+eGhG643j5Q=";
+    console.log("dhrUrl ==> "+dhrUrl);
+    console.log("encode ==> "+encode);
+
+    if (typeof(dhrUrl) != 'undefined' && dhrUrl !== "" && typeof(encode) != 'undefined'  && encode !== ""){
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET',dhrUrl);
+        // 设置请求头
+        xhr.setRequestHeader('UKEY',encode);
+        xhr.onreadystatechange = function() {
+            console.log("0===》" + xhr.getResponseHeader('Location'));
+            console.log(xhr.status);
+            console.log(this.readyState);
+            console.log(this.getResponseHeader('Location'));
+            if (xhr.status === 200) {
+                console.log("1===》" + xhr.getResponseHeader('Location'));
+            } else if (xhr.status === 302 || xhr.status === 301) {
+                console.log("2===》" + xhr.getResponseHeader('Location'));
+            }
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                console.log("3===》" + xhr.getResponseHeader('Location'));
+                // location.href = "https://todo.guoshou.com/hcm-app/";
+            }
+        };
+        xhr.onload = function () {
+            console.log("z===》" + xhr.getResponseHeader('Location'));
+        }
+        xhr.send();
+    }
+
+</script>
+</html>

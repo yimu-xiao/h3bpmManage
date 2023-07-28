@@ -1,0 +1,50 @@
+#端口
+server:
+  port: 8447
+
+#企业微信
+wx:
+  corpid: wwd99624be1b384a28
+  agentid: 1000145
+  corpsecret: ztEawQ8dN-aenbt2YH1_NDN08SKgr-tnS70GV_LFm90
+
+#redis用于存储企业微信token
+redis_addr: 127.0.0.1
+
+#正向代理参数（生产专用）
+env: production
+proxyHost: 10.5.14.61
+proxyPort: 33128
+
+#SM4加密密钥/偏移量
+SM4:
+  key: DHRApp20237282AB
+  iv: ChinaLifeAppTZ
+
+# 对接跳转地址 URL
+dhr:
+  url: https://ehr.guoshou.com/hcm/qx/app/gateway/GSTZEHR
+  appName: GSTZEHR
+
+spring:
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    #druid:
+    url: jdbc:mysql://localhost:3306/h3bpmManage?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&rewriteBatchedStatements=true
+    username: weixin
+    password: Wei1qaz@gstz
+
+cron:
+  userSyncTask: 0 0 0 * * ?
+
+sso:
+  appcode: 6_GSTZEHRv.1.0.0.020230612
+  key: GbGXLA66BZ
+  appsecret: 9e00b271-a3ca-4961-b6ef-e80768a861bd
+  getToken: http://10.5.10.147:80/sso/accessToken/getToken?appcode=
+  getUsers: http://10.5.10.147:80/sso/user/getUserList?access_token=
