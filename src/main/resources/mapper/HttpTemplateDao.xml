@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gstz.dao.HttpTemplateDao">
+
+    <resultMap type="com.gstz.entity.HttpTemplate" id="HttpTemplateMap">
+        <result property="templateId" column="template_id" jdbcType="INTEGER"/>
+        <result property="templateName" column="template_name" jdbcType="VARCHAR"/>
+        <result property="templateType" column="template_type" jdbcType="VARCHAR"/>
+        <result property="appId" column="app_id" jdbcType="INTEGER"/>
+        <result property="requestType" column="request_type" jdbcType="VARCHAR"/>
+        <result property="jsonTemplate" column="json_template" jdbcType="VARCHAR"/>
+        <result property="urlTemplate" column="url_template" jdbcType="VARCHAR"/>
+        <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="HttpTemplateMap">
+        select template_id,
+               template_name,
+               template_type,
+               app_id,
+               request_type,
+               json_template,
+               url_template,
+               sort_no,
+               remark
+        from http_template
+        where template_id = #{templateId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="HttpTemplateMap">
+        select
+        template_id, template_name, template_type, app_id, request_type, json_template, url_template, sort_no, remark
+        from http_template
+        <where>
+            <if test="templateId != null">
+                and template_id = #{templateId}
+            </if>
+            <if test="templateName != null and templateName != ''">
+                and template_name = #{templateName}
+            </if>
+            <if test="templateType != null and templateType != ''">
+                and template_type = #{templateType}
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+            <if test="requestType != null and requestType != ''">
+                and request_type = #{requestType}
+            </if>
+            <if test="jsonTemplate != null and jsonTemplate != ''">
+                and json_template = #{jsonTemplate}
+            </if>
+            <if test="urlTemplate != null and urlTemplate != ''">
+                and url_template = #{urlTemplate}
+            </if>
+            <if test="sortNo != null">
+                and sort_no = #{sortNo}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from http_template
+        <where>
+            <if test="templateId != null">
+                and template_id = #{templateId}
+            </if>
+            <if test="templateName != null and templateName != ''">
+                and template_name = #{templateName}
+            </if>
+            <if test="templateType != null and templateType != ''">
+                and template_type = #{templateType}
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+            <if test="requestType != null and requestType != ''">
+                and request_type = #{requestType}
+            </if>
+            <if test="jsonTemplate != null and jsonTemplate != ''">
+                and json_template = #{jsonTemplate}
+            </if>
+            <if test="urlTemplate != null and urlTemplate != ''">
+                and url_template = #{urlTemplate}
+            </if>
+            <if test="sortNo != null">
+                and sort_no = #{sortNo}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="templateId" useGeneratedKeys="true">
+        insert into http_template(template_name, template_type, app_id, request_type, json_template, url_template,
+                                  sort_no, remark)
+        values (#{templateName}, #{templateType}, #{appId}, #{requestType}, #{jsonTemplate}, #{urlTemplate}, #{sortNo},
+                #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="templateId" useGeneratedKeys="true">
+        insert into http_template(template_name, template_type, app_id, request_type, json_template, url_template,
+        sort_no, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.templateName}, #{entity.templateType}, #{entity.appId}, #{entity.requestType},
+            #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="templateId" useGeneratedKeys="true">
+        insert into http_template(template_name, template_type, app_id, request_type, json_template, url_template,
+        sort_no, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.templateName}, #{entity.templateType}, #{entity.appId}, #{entity.requestType},
+            #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        template_name = values(template_name),
+        template_type = values(template_type),
+        app_id = values(app_id),
+        request_type = values(request_type),
+        json_template = values(json_template),
+        url_template = values(url_template),
+        sort_no = values(sort_no),
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update http_template
+        <set>
+            <if test="templateName != null and templateName != ''">
+                template_name = #{templateName},
+            </if>
+            <if test="templateType != null and templateType != ''">
+                template_type = #{templateType},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId},
+            </if>
+            <if test="requestType != null and requestType != ''">
+                request_type = #{requestType},
+            </if>
+            <if test="jsonTemplate != null and jsonTemplate != ''">
+                json_template = #{jsonTemplate},
+            </if>
+            <if test="urlTemplate != null and urlTemplate != ''">
+                url_template = #{urlTemplate},
+            </if>
+            <if test="sortNo != null">
+                sort_no = #{sortNo},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where template_id = #{templateId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from http_template
+        where template_id = #{templateId}
+    </delete>
+
+</mapper>
+

@@ -21,11 +21,6 @@ SM4:
   key: DHRApp20237282AB
   iv: ChinaLifeAppTZ
 
-# 对接跳转地址 URL
-dhr:
-  url: https://ehr.guoshou.com/hcm/qx/app/gateway/GSTZEHR
-  appName: GSTZEHR
-
 spring:
   mvc:
     view:
@@ -35,9 +30,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     #druid:
-    url: jdbc:mysql://localhost:3306/h3bpmManage?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&rewriteBatchedStatements=true
-    username: weixin
-    password: Wei1qaz@gstz
+    url: jdbc:mysql://localhost:3306/h3bpm_manage?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&rewriteBatchedStatements=true
+    username: root
+    password: 123456
 
 cron:
   userSyncTask: 0 0 0 * * ?

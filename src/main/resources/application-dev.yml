@@ -21,11 +21,6 @@ SM4:
   key: Invoice987654321
   iv: ChinaLifeOA789
 
-# 对接跳转地址 URL
-dhr:
-  url: https://todo.guoshou.com/hcm/qx/app/gateway/GSTZEHR
-  appName: GSTZEHR
-
 spring:
   mvc:
     view:
@@ -35,16 +30,27 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     #druid:
-    url: jdbc:mysql://localhost:3306/weixinDHR?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&rewriteBatchedStatements=true
+    url: jdbc:mysql://localhost:3306/h3bpm_manage?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&rewriteBatchedStatements=true
     username: root
     password: 123456
+
+
+#mybatis
+mybatis-plus:
+  #打印sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
 
 cron:
   userSyncTask: 59 57 17 * * ?
 
 sso:
-  appcode: 6_GSTZEHRv.1.0.0.020230612
-  key: fGdLo020hl
-  appsecret: d7bcac90-c680-4f6d-bf33-bf08380e3087
-  getToken: http://10.5.12.88:8080/sso/accessToken/getToken?appcode=
-  getUsers: http://10.5.12.88:8080/sso/user/getUserList?access_token=
+ appcode: 6_GSTZEHRv.1.0.0.020230612
+ key: fGdLo020hl
+ appsecret: d7bcac90-c680-4f6d-bf33-bf08380e3087
+ getToken: http://10.5.12.88:8080/sso/accessToken/getToken?appcode=
+ getUsers: http://10.5.12.88:8080/sso/user/getUserList?access_token=
+
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gstz.dao.AppInfoDao">
+
+    <resultMap type="com.gstz.entity.AppInfo" id="AppInfoMap">
+        <result property="appId" column="app_id" jdbcType="INTEGER"/>
+        <result property="appName" column="app_name" jdbcType="INTEGER"/>
+        <result property="appType" column="app_type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AppInfoMap">
+        select app_id,
+               app_name,
+               app_type
+        from app_info
+        where app_id = #{appId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AppInfoMap">
+        select
+        app_id, app_name, app_type
+        from app_info
+        <where>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+            <if test="appName != null">
+                and app_name = #{appName}
+            </if>
+            <if test="appType != null and appType != ''">
+                and app_type = #{appType}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from app_info
+        <where>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+            <if test="appName != null">
+                and app_name = #{appName}
+            </if>
+            <if test="appType != null and appType != ''">
+                and app_type = #{appType}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="appId" useGeneratedKeys="true">
+        insert into app_info(app_name, app_type)
+        values (#{appName}, #{appType})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="appId" useGeneratedKeys="true">
+        insert into app_info(app_name, app_type)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.appName}, #{entity.appType})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="appId" useGeneratedKeys="true">
+        insert into app_info(app_name, app_type)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.appName}, #{entity.appType})
+        </foreach>
+        on duplicate key update
+        app_name = values(app_name),
+        app_type = values(app_type)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update app_info
+        <set>
+            <if test="appName != null">
+                app_name = #{appName},
+            </if>
+            <if test="appType != null and appType != ''">
+                app_type = #{appType},
+            </if>
+        </set>
+        where app_id = #{appId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from app_info
+        where app_id = #{appId}
+    </delete>
+
+</mapper>
+
