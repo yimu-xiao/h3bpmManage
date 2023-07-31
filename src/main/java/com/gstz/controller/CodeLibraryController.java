@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * 码值表(CodeLibrary)表控制层
  *
  * @author makejava
- * @since 2023-07-28 10:48:42
+ * @since 2023-07-28 11:12:42
  */
 @RestController
 @RequestMapping("codeLibrary")
@@ -32,7 +32,7 @@ public class CodeLibraryController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<CodeLibrary>> queryByPage(CodeLibrary codeLibrary, PageRequest pageRequest) {
+    public ResponseEntity<Page<CodeLibrary>> queryByPage(@RequestBody  CodeLibrary codeLibrary, PageRequest pageRequest) {
         return ResponseEntity.ok(this.codeLibraryService.queryByPage(codeLibrary, pageRequest));
     }
 
@@ -54,7 +54,7 @@ public class CodeLibraryController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<CodeLibrary> add(CodeLibrary codeLibrary) {
+    public ResponseEntity<CodeLibrary> add(@RequestBody CodeLibrary codeLibrary) {
         return ResponseEntity.ok(this.codeLibraryService.insert(codeLibrary));
     }
 
@@ -65,7 +65,7 @@ public class CodeLibraryController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<CodeLibrary> edit(CodeLibrary codeLibrary) {
+    public ResponseEntity<CodeLibrary> edit(@RequestBody CodeLibrary codeLibrary) {
         return ResponseEntity.ok(this.codeLibraryService.update(codeLibrary));
     }
 

@@ -1,17 +1,18 @@
 package com.gstz.dao;
 
 import com.gstz.entity.AppInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
-
 import java.util.List;
 
 /**
  * 对接系统表(AppInfo)表数据库访问层
  *
  * @author makejava
- * @since 2023-07-28 10:48:42
+ * @since 2023-07-31 11:21:29
  */
+@Mapper
 public interface AppInfoDao {
 
     /**
@@ -25,8 +26,8 @@ public interface AppInfoDao {
     /**
      * 查询指定行数据
      *
-     * @param appInfo  查询条件
-     * @param pageable 分页对象
+     * @param appInfo 查询条件
+     * @param pageable         分页对象
      * @return 对象列表
      */
     List<AppInfo> queryAllByLimit(AppInfo appInfo, @Param("pageable") Pageable pageable);

@@ -6,18 +6,30 @@ import java.io.Serializable;
  * 对接系统表(AppInfo)实体类
  *
  * @author makejava
- * @since 2023-07-28 10:48:42
+ * @since 2023-07-31 11:21:30
  */
 public class AppInfo implements Serializable {
-    private static final long serialVersionUID = -93706991023866266L;
+    private static final long serialVersionUID = 486453997369412767L;
     /**
      * 应用编号
      */
     private Integer appId;
     /**
+     * 执行编号
+     */
+    private Integer executeId;
+    /**
+     * 随机密钥
+     */
+    private String appKey;
+    /**
+     * ip白名单
+     */
+    private String appIp;
+    /**
      * 应用名称
      */
-    private Integer appName;
+    private String appName;
     /**
      * 对接方式（token/key/head）
      */
@@ -32,11 +44,35 @@ public class AppInfo implements Serializable {
         this.appId = appId;
     }
 
-    public Integer getAppName() {
+    public Integer getExecuteId() {
+        return executeId;
+    }
+
+    public void setExecuteId(Integer executeId) {
+        this.executeId = executeId;
+    }
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
+
+    public String getAppIp() {
+        return appIp;
+    }
+
+    public void setAppIp(String appIp) {
+        this.appIp = appIp;
+    }
+
+    public String getAppName() {
         return appName;
     }
 
-    public void setAppName(Integer appName) {
+    public void setAppName(String appName) {
         this.appName = appName;
     }
 

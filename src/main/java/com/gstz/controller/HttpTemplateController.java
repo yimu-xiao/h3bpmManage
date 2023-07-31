@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * 请求模板表(HttpTemplate)表控制层
  *
  * @author makejava
- * @since 2023-07-28 10:48:43
+ * @since 2023-07-28 11:12:43
  */
 @RestController
 @RequestMapping("httpTemplate")
@@ -32,7 +32,7 @@ public class HttpTemplateController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<HttpTemplate>> queryByPage(HttpTemplate httpTemplate, PageRequest pageRequest) {
+    public ResponseEntity<Page<HttpTemplate>> queryByPage(@RequestBody HttpTemplate httpTemplate, PageRequest pageRequest) {
         return ResponseEntity.ok(this.httpTemplateService.queryByPage(httpTemplate, pageRequest));
     }
 
@@ -54,7 +54,7 @@ public class HttpTemplateController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<HttpTemplate> add(HttpTemplate httpTemplate) {
+    public ResponseEntity<HttpTemplate> add(@RequestBody HttpTemplate httpTemplate) {
         return ResponseEntity.ok(this.httpTemplateService.insert(httpTemplate));
     }
 
@@ -65,7 +65,7 @@ public class HttpTemplateController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<HttpTemplate> edit(HttpTemplate httpTemplate) {
+    public ResponseEntity<HttpTemplate> edit(@RequestBody HttpTemplate httpTemplate) {
         return ResponseEntity.ok(this.httpTemplateService.update(httpTemplate));
     }
 

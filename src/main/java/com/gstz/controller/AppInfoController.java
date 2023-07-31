@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * 对接系统表(AppInfo)表控制层
  *
  * @author makejava
- * @since 2023-07-28 10:48:42
+ * @since 2023-07-31 11:21:28
  */
 @RestController
 @RequestMapping("appInfo")
@@ -27,12 +27,12 @@ public class AppInfoController {
     /**
      * 分页查询
      *
-     * @param appInfo     筛选条件
-     * @param pageRequest 分页对象
+     * @param appInfo 筛选条件
+     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<AppInfo>> queryByPage(AppInfo appInfo, PageRequest pageRequest) {
+    public ResponseEntity<Page<AppInfo>> queryByPage(@RequestBody AppInfo appInfo, PageRequest pageRequest) {
         return ResponseEntity.ok(this.appInfoService.queryByPage(appInfo, pageRequest));
     }
 
@@ -54,7 +54,7 @@ public class AppInfoController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<AppInfo> add(AppInfo appInfo) {
+    public ResponseEntity<AppInfo> add(@RequestBody AppInfo appInfo) {
         return ResponseEntity.ok(this.appInfoService.insert(appInfo));
     }
 
@@ -65,7 +65,7 @@ public class AppInfoController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<AppInfo> edit(AppInfo appInfo) {
+    public ResponseEntity<AppInfo> edit(@RequestBody AppInfo appInfo) {
         return ResponseEntity.ok(this.appInfoService.update(appInfo));
     }
 

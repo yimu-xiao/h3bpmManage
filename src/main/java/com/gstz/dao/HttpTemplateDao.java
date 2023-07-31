@@ -1,6 +1,7 @@
 package com.gstz.dao;
 
 import com.gstz.entity.HttpTemplate;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 
@@ -10,8 +11,9 @@ import java.util.List;
  * 请求模板表(HttpTemplate)表数据库访问层
  *
  * @author makejava
- * @since 2023-07-28 10:48:43
+ * @since 2023-07-28 11:12:43
  */
+@Mapper
 public interface HttpTemplateDao {
 
     /**

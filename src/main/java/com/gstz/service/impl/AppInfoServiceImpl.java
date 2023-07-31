@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 对接系统表(AppInfo)表服务实现类
  *
  * @author makejava
- * @since 2023-07-28 10:48:42
+ * @since 2023-07-31 11:21:31
  */
 @Service("appInfoService")
 public class AppInfoServiceImpl implements AppInfoService {
@@ -35,8 +35,8 @@ public class AppInfoServiceImpl implements AppInfoService {
     /**
      * 分页查询
      *
-     * @param appInfo     筛选条件
-     * @param pageRequest 分页对象
+     * @param appInfo 筛选条件
+     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override

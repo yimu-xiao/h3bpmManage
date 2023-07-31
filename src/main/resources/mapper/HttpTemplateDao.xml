@@ -6,7 +6,7 @@
         <result property="templateId" column="template_id" jdbcType="INTEGER"/>
         <result property="templateName" column="template_name" jdbcType="VARCHAR"/>
         <result property="templateType" column="template_type" jdbcType="VARCHAR"/>
-        <result property="appId" column="app_id" jdbcType="INTEGER"/>
+        <result property="executeId" column="execute_id" jdbcType="INTEGER"/>
         <result property="requestType" column="request_type" jdbcType="VARCHAR"/>
         <result property="jsonTemplate" column="json_template" jdbcType="VARCHAR"/>
         <result property="urlTemplate" column="url_template" jdbcType="VARCHAR"/>
@@ -19,7 +19,7 @@
         select template_id,
                template_name,
                template_type,
-               app_id,
+               execute_id,
                request_type,
                json_template,
                url_template,
@@ -32,7 +32,8 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="HttpTemplateMap">
         select
-        template_id, template_name, template_type, app_id, request_type, json_template, url_template, sort_no, remark
+        template_id, template_name, template_type, execute_id, request_type, json_template, url_template, sort_no,
+        remark
         from http_template
         <where>
             <if test="templateId != null">
@@ -44,8 +45,8 @@
             <if test="templateType != null and templateType != ''">
                 and template_type = #{templateType}
             </if>
-            <if test="appId != null">
-                and app_id = #{appId}
+            <if test="executeId != null">
+                and execute_id = #{executeId}
             </if>
             <if test="requestType != null and requestType != ''">
                 and request_type = #{requestType}
@@ -80,8 +81,8 @@
             <if test="templateType != null and templateType != ''">
                 and template_type = #{templateType}
             </if>
-            <if test="appId != null">
-                and app_id = #{appId}
+            <if test="executeId != null">
+                and execute_id = #{executeId}
             </if>
             <if test="requestType != null and requestType != ''">
                 and request_type = #{requestType}
@@ -103,34 +104,34 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="templateId" useGeneratedKeys="true">
-        insert into http_template(template_name, template_type, app_id, request_type, json_template, url_template,
+        insert into http_template(template_name, template_type, execute_id, request_type, json_template, url_template,
                                   sort_no, remark)
-        values (#{templateName}, #{templateType}, #{appId}, #{requestType}, #{jsonTemplate}, #{urlTemplate}, #{sortNo},
-                #{remark})
+        values (#{templateName}, #{templateType}, #{executeId}, #{requestType}, #{jsonTemplate}, #{urlTemplate},
+                #{sortNo}, #{remark})
     </insert>
 
     <insert id="insertBatch" keyProperty="templateId" useGeneratedKeys="true">
-        insert into http_template(template_name, template_type, app_id, request_type, json_template, url_template,
+        insert into http_template(template_name, template_type, execute_id, request_type, json_template, url_template,
         sort_no, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.templateName}, #{entity.templateType}, #{entity.appId}, #{entity.requestType},
+            (#{entity.templateName}, #{entity.templateType}, #{entity.executeId}, #{entity.requestType},
             #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="templateId" useGeneratedKeys="true">
-        insert into http_template(template_name, template_type, app_id, request_type, json_template, url_template,
+        insert into http_template(template_name, template_type, execute_id, request_type, json_template, url_template,
         sort_no, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.templateName}, #{entity.templateType}, #{entity.appId}, #{entity.requestType},
+            (#{entity.templateName}, #{entity.templateType}, #{entity.executeId}, #{entity.requestType},
             #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
         </foreach>
         on duplicate key update
         template_name = values(template_name),
         template_type = values(template_type),
-        app_id = values(app_id),
+        execute_id = values(execute_id),
         request_type = values(request_type),
         json_template = values(json_template),
         url_template = values(url_template),
@@ -148,8 +149,8 @@
             <if test="templateType != null and templateType != ''">
                 template_type = #{templateType},
             </if>
-            <if test="appId != null">
-                app_id = #{appId},
+            <if test="executeId != null">
+                execute_id = #{executeId},
             </if>
             <if test="requestType != null and requestType != ''">
                 request_type = #{requestType},

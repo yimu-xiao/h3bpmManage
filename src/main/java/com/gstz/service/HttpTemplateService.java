@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
  * 请求模板表(HttpTemplate)表服务接口
  *
  * @author makejava
- * @since 2023-07-28 10:48:43
+ * @since 2023-07-28 11:12:44
  */
 public interface HttpTemplateService {
 

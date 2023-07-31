@@ -4,15 +4,17 @@
 
     <resultMap type="com.gstz.entity.AppInfo" id="AppInfoMap">
         <result property="appId" column="app_id" jdbcType="INTEGER"/>
-        <result property="appName" column="app_name" jdbcType="INTEGER"/>
+        <result property="executeId" column="execute_id" jdbcType="INTEGER"/>
+        <result property="appKey" column="app_key" jdbcType="VARCHAR"/>
+        <result property="appIp" column="app_ip" jdbcType="VARCHAR"/>
+        <result property="appName" column="app_name" jdbcType="VARCHAR"/>
         <result property="appType" column="app_type" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="AppInfoMap">
-        select app_id,
-               app_name,
-               app_type
+        select
+          app_id, execute_id, app_key, app_ip, app_name, app_type
         from app_info
         where app_id = #{appId}
     </select>
@@ -20,13 +22,22 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="AppInfoMap">
         select
-        app_id, app_name, app_type
+          app_id, execute_id, app_key, app_ip, app_name, app_type
         from app_info
         <where>
             <if test="appId != null">
                 and app_id = #{appId}
             </if>
-            <if test="appName != null">
+            <if test="executeId != null">
+                and execute_id = #{executeId}
+            </if>
+            <if test="appKey != null and appKey != ''">
+                and app_key = #{appKey}
+            </if>
+            <if test="appIp != null and appIp != ''">
+                and app_ip = #{appIp}
+            </if>
+            <if test="appName != null and appName != ''">
                 and app_name = #{appName}
             </if>
             <if test="appType != null and appType != ''">
@@ -44,7 +55,16 @@
             <if test="appId != null">
                 and app_id = #{appId}
             </if>
-            <if test="appName != null">
+            <if test="executeId != null">
+                and execute_id = #{executeId}
+            </if>
+            <if test="appKey != null and appKey != ''">
+                and app_key = #{appKey}
+            </if>
+            <if test="appIp != null and appIp != ''">
+                and app_ip = #{appIp}
+            </if>
+            <if test="appName != null and appName != ''">
                 and app_name = #{appName}
             </if>
             <if test="appType != null and appType != ''">
@@ -55,25 +75,27 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="appId" useGeneratedKeys="true">
-        insert into app_info(app_name, app_type)
-        values (#{appName}, #{appType})
+        insert into app_info(app_key, app_ip, app_name, app_type)
+        values (#{appKey}, #{appIp}, #{appName}, #{appType})
     </insert>
 
     <insert id="insertBatch" keyProperty="appId" useGeneratedKeys="true">
-        insert into app_info(app_name, app_type)
+        insert into app_info(app_key, app_ip, app_name, app_type)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.appName}, #{entity.appType})
+        (#{entity.appKey}, #{entity.appIp}, #{entity.appName}, #{entity.appType})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="appId" useGeneratedKeys="true">
-        insert into app_info(app_name, app_type)
+        insert into app_info(app_key, app_ip, app_name, app_type)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.appName}, #{entity.appType})
+            (#{entity.appKey}, #{entity.appIp}, #{entity.appName}, #{entity.appType})
         </foreach>
         on duplicate key update
+        app_key = values(app_key),
+        app_ip = values(app_ip),
         app_name = values(app_name),
         app_type = values(app_type)
     </insert>
@@ -82,7 +104,13 @@
     <update id="update">
         update app_info
         <set>
-            <if test="appName != null">
+            <if test="appKey != null and appKey != ''">
+                app_key = #{appKey},
+            </if>
+            <if test="appIp != null and appIp != ''">
+                app_ip = #{appIp},
+            </if>
+            <if test="appName != null and appName != ''">
                 app_name = #{appName},
             </if>
             <if test="appType != null and appType != ''">
@@ -94,9 +122,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete
-        from app_info
-        where app_id = #{appId}
+        delete from app_info where app_id = #{appId}
     </delete>
 
 </mapper>

@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 码值表(CodeLibrary)实体类
  *
  * @author makejava
- * @since 2023-07-28 10:48:42
+ * @since 2023-07-28 11:12:42
  */
 public class CodeLibrary implements Serializable {
-    private static final long serialVersionUID = 586468680279505962L;
+    private static final long serialVersionUID = 441494729193660763L;
     /**
      * 码值编号
      */
