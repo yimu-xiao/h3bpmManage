@@ -1,7 +1,6 @@
 package com.gstz.service;
 
 import com.gstz.entity.CodeLibrary;
-import com.gstz.entity.ExecuteInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * 码值表(CodeLibrary)表服务接口
  *
  * @author makejava
- * @since 2023-07-28 11:12:43
+ * @since 2023-07-31 16:02:49
  */
 public interface CodeLibraryService {
 
@@ -63,6 +62,5 @@ public interface CodeLibraryService {
      * @return 是否成功
      */
     boolean deleteById(String codeNo);
-
 
 }

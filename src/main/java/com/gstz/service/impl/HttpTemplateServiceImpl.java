@@ -54,7 +54,7 @@ public class HttpTemplateServiceImpl implements HttpTemplateService {
      */
     @Override
     public List<HttpTemplate> queryByParams(HttpTemplate httpTemplate) {
-        return this.httpTemplateDao.queryAllByLimit(httpTemplate, null);
+        return this.httpTemplateDao.queryByParams(httpTemplate);
     }
 
     /**

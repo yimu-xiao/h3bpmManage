@@ -82,5 +82,6 @@ public interface HttpTemplateDao {
      */
     int deleteById(Integer templateId);
 
+    List<HttpTemplate> queryByParams(HttpTemplate httpTemplate);
 }
 

@@ -4,7 +4,6 @@ import com.gstz.entity.CodeLibrary;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * 码值表(CodeLibrary)表数据库访问层
  *
  * @author makejava
- * @since 2023-07-28 11:12:42
+ * @since 2023-07-31 16:02:48
  */
 @Mapper
 public interface CodeLibraryDao {
@@ -83,5 +82,6 @@ public interface CodeLibraryDao {
      */
     int deleteById(String codeNo);
 
+    List<CodeLibrary> queryByParams(CodeLibrary codeLibrary);
 }
 

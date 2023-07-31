@@ -15,7 +15,7 @@ import java.util.List;
  * 码值表(CodeLibrary)表服务实现类
  *
  * @author makejava
- * @since 2023-07-28 11:12:43
+ * @since 2023-07-31 16:02:50
  */
 @Service("codeLibraryService")
 public class CodeLibraryServiceImpl implements CodeLibraryService {
@@ -48,7 +48,7 @@ public class CodeLibraryServiceImpl implements CodeLibraryService {
 
     @Override
     public List<CodeLibrary> queryByParams(CodeLibrary codeLibrary) {
-        return this.codeLibraryDao.queryAllByLimit(codeLibrary, null);
+        return this.codeLibraryDao.queryByParams(codeLibrary);
     }
 
     /**

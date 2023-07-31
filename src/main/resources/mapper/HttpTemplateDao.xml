@@ -89,6 +89,10 @@
         </where>
     </select>
 
+    <select id="queryByParams" resultType="com.gstz.entity.HttpTemplate">
+
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="templateId" useGeneratedKeys="true">
         insert into http_template(template_name, template_type, request_type, json_template, url_template, sort_no, remark)

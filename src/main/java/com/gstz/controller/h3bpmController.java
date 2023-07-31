@@ -1,5 +1,6 @@
 package com.gstz.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gstz.entity.CodeLibrary;
 import com.gstz.entity.ExecuteInfo;
 import com.gstz.entity.HttpTemplate;
@@ -54,7 +55,13 @@ public class h3bpmController {
                 if (httpTemplate.getRequestType() != null &&
                 httpTemplate.getRequestType().equals("GET")) {
                     String s = HttpUtil.httpGet(urlTemplate);
-                    logger.info(s);
+                    if ( s != null && ! s.equals("")) {
+                        JSONObject jobject = JSONObject.parseObject(s);
+                        for (String key : jobject.keySet()) {
+                            logger.info(key + " : " + jobject.getString(key));
+
+                        }
+                    }
                 }
 
             }
