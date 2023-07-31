@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 请求模板表(HttpTemplate)表服务实现类
@@ -43,6 +44,17 @@ public class HttpTemplateServiceImpl implements HttpTemplateService {
     public Page<HttpTemplate> queryByPage(HttpTemplate httpTemplate, PageRequest pageRequest) {
         long total = this.httpTemplateDao.count(httpTemplate);
         return new PageImpl<>(this.httpTemplateDao.queryAllByLimit(httpTemplate, pageRequest), pageRequest, total);
+    }
+
+    /**
+     * List查询
+     *
+     * @param httpTemplate 筛选条件
+     * @return 查询结果
+     */
+    @Override
+    public List<HttpTemplate> queryByParams(HttpTemplate httpTemplate) {
+        return this.httpTemplateDao.queryAllByLimit(httpTemplate, null);
     }
 
     /**

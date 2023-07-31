@@ -1,8 +1,11 @@
 package com.gstz.service;
 
 import com.gstz.entity.CodeLibrary;
+import com.gstz.entity.ExecuteInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * 码值表(CodeLibrary)表服务接口
@@ -30,6 +33,14 @@ public interface CodeLibraryService {
     Page<CodeLibrary> queryByPage(CodeLibrary codeLibrary, PageRequest pageRequest);
 
     /**
+     * list查询
+     *
+     * @param codeLibrary 筛选条件
+     * @return 查询结果
+     */
+    List<CodeLibrary> queryByParams(CodeLibrary codeLibrary);
+
+    /**
      * 新增数据
      *
      * @param codeLibrary 实例对象
@@ -52,5 +63,6 @@ public interface CodeLibraryService {
      * @return 是否成功
      */
     boolean deleteById(String codeNo);
+
 
 }

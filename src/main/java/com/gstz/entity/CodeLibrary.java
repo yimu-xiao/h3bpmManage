@@ -31,6 +31,9 @@ public class CodeLibrary implements Serializable {
      */
     private Integer sortNo;
 
+    public CodeLibrary(String codeNo) {
+        this.codeNo = codeNo;
+    }
 
     public String getCodeNo() {
         return codeNo;

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gstz.dao.ExecuteInfoDao">
+
+    <resultMap type="com.gstz.entity.ExecuteInfo" id="ExecuteInfoMap">
+        <result property="executeId" column="execute_id" jdbcType="INTEGER"/>
+        <result property="templateId" column="template_id" jdbcType="INTEGER"/>
+        <result property="appId" column="app_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ExecuteInfoMap">
+        select execute_id,
+               template_id,
+               app_id
+        from execute_info
+        where execute_id = #{executeId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ExecuteInfoMap">
+        select
+        execute_id, template_id, app_id
+        from execute_info
+        <where>
+            <if test="executeId != null">
+                and execute_id = #{executeId}
+            </if>
+            <if test="templateId != null">
+                and template_id = #{templateId}
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+        </where>
+        <if  test=" pageable != null ">
+            limit #{pageable.offset}, #{pageable.pageSize}
+        </if>    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from execute_info
+        <where>
+            <if test="executeId != null">
+                and execute_id = #{executeId}
+            </if>
+            <if test="templateId != null">
+                and template_id = #{templateId}
+            </if>
+            <if test="appId != null">
+                and app_id = #{appId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryTemByExeId" resultType="com.gstz.entity.HttpTemplate">
+        select ht.*
+        from execute_info ei, http_template ht
+        <where>
+            ei.template_id = ht.template_id
+            <if test="exeId != null">
+                and ei.execute_id = #{exeId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="executeId" useGeneratedKeys="true">
+        insert into execute_info(app_id)
+        values (#{appId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="executeId" useGeneratedKeys="true">
+        insert into execute_info(app_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.appId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="executeId" useGeneratedKeys="true">
+        insert into execute_info(app_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.appId})
+        </foreach>
+        on duplicate key update
+        app_id = values(app_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update execute_info
+        <set>
+            <if test="appId != null">
+                app_id = #{appId},
+            </if>
+        </set>
+        where execute_id = #{executeId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from execute_info
+        where execute_id = #{executeId}
+    </delete>
+
+</mapper>
+

@@ -4,6 +4,8 @@ import com.gstz.entity.HttpTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * 请求模板表(HttpTemplate)表服务接口
  *
@@ -28,6 +30,13 @@ public interface HttpTemplateService {
      * @return 查询结果
      */
     Page<HttpTemplate> queryByPage(HttpTemplate httpTemplate, PageRequest pageRequest);
+
+    /**
+     * List 查询
+     * @param httpTemplate 筛选条件
+     * @return 查询结果
+     */
+    List<HttpTemplate> queryByParams(HttpTemplate httpTemplate);
 
     /**
      * 新增数据

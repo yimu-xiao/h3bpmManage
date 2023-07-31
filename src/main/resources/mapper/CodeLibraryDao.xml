@@ -12,11 +12,8 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="CodeLibraryMap">
-        select code_no,
-               item_no,
-               item_name,
-               item_param,
-               sort_no
+        select
+          code_no, item_no, item_name, item_param, sort_no
         from code_library
         where code_no = #{codeNo}
     </select>
@@ -24,7 +21,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="CodeLibraryMap">
         select
-        code_no, item_no, item_name, item_param, sort_no
+          code_no, item_no, item_name, item_param, sort_no
         from code_library
         <where>
             <if test="codeNo != null and codeNo != ''">
@@ -79,7 +76,7 @@
         insert into code_library(item_name, item_param, sort_no)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.itemName}, #{entity.itemParam}, #{entity.sortNo})
+        (#{entity.itemName}, #{entity.itemParam}, #{entity.sortNo})
         </foreach>
     </insert>
 
@@ -114,9 +111,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete
-        from code_library
-        where code_no = #{codeNo}
+        delete from code_library where code_no = #{codeNo}
     </delete>
 
 </mapper>

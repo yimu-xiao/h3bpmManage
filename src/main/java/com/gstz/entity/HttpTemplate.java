@@ -6,10 +6,10 @@ import java.io.Serializable;
  * 请求模板表(HttpTemplate)实体类
  *
  * @author makejava
- * @since 2023-07-28 11:12:44
+ * @since 2023-07-31 14:11:49
  */
 public class HttpTemplate implements Serializable {
-    private static final long serialVersionUID = 362840705270530553L;
+    private static final long serialVersionUID = 495377516613575978L;
     /**
      * 模板编号
      */
@@ -22,10 +22,6 @@ public class HttpTemplate implements Serializable {
      * 模板类型（json/url参数拼接）
      */
     private String templateType;
-    /**
-     * 关联执行id
-     */
-    private Integer executeId;
     /**
      * 请求方式（POST/GET）
      */
@@ -70,14 +66,6 @@ public class HttpTemplate implements Serializable {
 
     public void setTemplateType(String templateType) {
         this.templateType = templateType;
-    }
-
-    public Integer getExecuteId() {
-        return executeId;
-    }
-
-    public void setExecuteId(Integer executeId) {
-        this.executeId = executeId;
     }
 
     public String getRequestType() {

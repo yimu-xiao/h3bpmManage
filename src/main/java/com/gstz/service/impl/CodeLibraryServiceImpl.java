@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 码值表(CodeLibrary)表服务实现类
@@ -43,6 +44,11 @@ public class CodeLibraryServiceImpl implements CodeLibraryService {
     public Page<CodeLibrary> queryByPage(CodeLibrary codeLibrary, PageRequest pageRequest) {
         long total = this.codeLibraryDao.count(codeLibrary);
         return new PageImpl<>(this.codeLibraryDao.queryAllByLimit(codeLibrary, pageRequest), pageRequest, total);
+    }
+
+    @Override
+    public List<CodeLibrary> queryByParams(CodeLibrary codeLibrary) {
+        return this.codeLibraryDao.queryAllByLimit(codeLibrary, null);
     }
 
     /**
