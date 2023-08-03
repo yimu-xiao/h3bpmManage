@@ -1,4 +1,4 @@
-package com.gstz.request.user;
+package com.gstz.entity.request.user;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.gstz.weixinAPI;
+package com.gstz.utils.weixinAPI;
 
 import java.io.Serializable;
 import java.util.List;

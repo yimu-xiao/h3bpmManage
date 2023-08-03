@@ -1,4 +1,4 @@
-package com.gstz.request.sso;
+package com.gstz.entity.request.sso;
 
 import lombok.Data;
 

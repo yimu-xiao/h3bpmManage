@@ -159,11 +159,10 @@ public class HttpUtil {
 			}
 			connection.setConnectTimeout(30000);//设置30s超时
 			// 设置通用的请求属性
-			connection.setRequestProperty("accept", "text/javascript");
-			connection.setRequestProperty("Content-Type", "application/xml; charset=utf-8");
-			// conn.setRequestProperty("connection", "Keep-Alive");
-			// conn.setRequestProperty("user-agent","Mozilla/4.0 (compatible; MSIE 6.0;
-			// Windows NT 5.1;SV1)");
+			connection.setRequestProperty("Accept", "*/*");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Connection", "keep-alive");
+			connection.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
 			// 发送POST请求必须设置如下两行
 			connection.setDoOutput(true);
 			connection.setDoInput(true);

@@ -7,6 +7,7 @@
         <result property="templateName" column="template_name" jdbcType="VARCHAR"/>
         <result property="templateType" column="template_type" jdbcType="VARCHAR"/>
         <result property="requestType" column="request_type" jdbcType="VARCHAR"/>
+        <result property="paramId" column="param_id" jdbcType="INTEGER"/>
         <result property="jsonTemplate" column="json_template" jdbcType="VARCHAR"/>
         <result property="urlTemplate" column="url_template" jdbcType="VARCHAR"/>
         <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>
@@ -16,7 +17,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="HttpTemplateMap">
         select
-          template_id, template_name, template_type, request_type, json_template, url_template, sort_no, remark
+          template_id, template_name, template_type, request_type, param_id, json_template, url_template, sort_no, remark
         from http_template
         where template_id = #{templateId}
     </select>
@@ -24,7 +25,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="HttpTemplateMap">
         select
-          template_id, template_name, template_type, request_type, json_template, url_template, sort_no, remark
+          template_id, template_name, template_type, request_type, param_id, json_template, url_template, sort_no, remark
         from http_template
         <where>
             <if test="templateId != null">
@@ -39,6 +40,9 @@
             <if test="requestType != null and requestType != ''">
                 and request_type = #{requestType}
             </if>
+            <if test="paramId != null">
+                and param_id = #{paramId}
+            </if>
             <if test="jsonTemplate != null and jsonTemplate != ''">
                 and json_template = #{jsonTemplate}
             </if>
@@ -52,9 +56,7 @@
                 and remark = #{remark}
             </if>
         </where>
-        <if  test=" pageable != null ">
-            limit #{pageable.offset}, #{pageable.pageSize}
-        </if>
+        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->
@@ -74,6 +76,9 @@
             <if test="requestType != null and requestType != ''">
                 and request_type = #{requestType}
             </if>
+            <if test="paramId != null">
+                and param_id = #{paramId}
+            </if>
             <if test="jsonTemplate != null and jsonTemplate != ''">
                 and json_template = #{jsonTemplate}
             </if>
@@ -89,34 +94,31 @@
         </where>
     </select>
 
-    <select id="queryByParams" resultType="com.gstz.entity.HttpTemplate">
-
-    </select>
-
     <!--新增所有列-->
     <insert id="insert" keyProperty="templateId" useGeneratedKeys="true">
-        insert into http_template(template_name, template_type, request_type, json_template, url_template, sort_no, remark)
-        values (#{templateName}, #{templateType}, #{requestType}, #{jsonTemplate}, #{urlTemplate}, #{sortNo}, #{remark})
+        insert into http_template(template_name, template_type, request_type, param_id, json_template, url_template, sort_no, remark)
+        values (#{templateName}, #{templateType}, #{requestType}, #{paramId}, #{jsonTemplate}, #{urlTemplate}, #{sortNo}, #{remark})
     </insert>
 
     <insert id="insertBatch" keyProperty="templateId" useGeneratedKeys="true">
-        insert into http_template(template_name, template_type, request_type, json_template, url_template, sort_no, remark)
+        insert into http_template(template_name, template_type, request_type, param_id, json_template, url_template, sort_no, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.templateName}, #{entity.templateType}, #{entity.requestType}, #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
+        (#{entity.templateName}, #{entity.templateType}, #{entity.requestType}, #{entity.paramId}, #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="templateId" useGeneratedKeys="true">
-        insert into http_template(template_name, template_type, request_type, json_template, url_template, sort_no, remark)
+        insert into http_template(template_name, template_type, request_type, param_id, json_template, url_template, sort_no, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.templateName}, #{entity.templateType}, #{entity.requestType}, #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
+            (#{entity.templateName}, #{entity.templateType}, #{entity.requestType}, #{entity.paramId}, #{entity.jsonTemplate}, #{entity.urlTemplate}, #{entity.sortNo}, #{entity.remark})
         </foreach>
         on duplicate key update
         template_name = values(template_name),
         template_type = values(template_type),
         request_type = values(request_type),
+        param_id = values(param_id),
         json_template = values(json_template),
         url_template = values(url_template),
         sort_no = values(sort_no),
@@ -135,6 +137,9 @@
             </if>
             <if test="requestType != null and requestType != ''">
                 request_type = #{requestType},
+            </if>
+            <if test="paramId != null">
+                param_id = #{paramId},
             </if>
             <if test="jsonTemplate != null and jsonTemplate != ''">
                 json_template = #{jsonTemplate},

@@ -1,4 +1,4 @@
-package com.gstz.weixinAPI;
+package com.gstz.utils.weixinAPI;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;

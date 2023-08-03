@@ -1,4 +1,4 @@
-package com.gstz.request;
+package com.gstz.entity.request;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;

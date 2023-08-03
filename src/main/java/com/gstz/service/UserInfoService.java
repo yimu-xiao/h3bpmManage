@@ -3,8 +3,8 @@ package com.gstz.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gstz.entity.UserInfo;
-import com.gstz.request.user.UidsReq;
-import com.gstz.request.user.UserReq;
+import com.gstz.entity.request.user.UidsReq;
+import com.gstz.entity.request.user.UserReq;
 
 /**
  * @author yimu

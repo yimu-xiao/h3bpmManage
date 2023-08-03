@@ -1,4 +1,4 @@
-package com.gstz.config.contant;
+package com.gstz.entity.contant;
 
 /**
  * @author yimu
