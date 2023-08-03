@@ -40,11 +40,10 @@ public class DataInitUtil {
     public static UserResp getUserInfo(String name)  {
         String url = "https://tworkflow.guoshou.com/api/bpm-api/getUserInfoByName?name="+name;
         String data = HttpUtil.sendReq(url,null,token);
-        UserResp userResp = JSONObject.parseObject(data, UserResp.class);
-        if (userResp == null || userResp.getCode() != 0) {
+        if (data.contains("accessToken验证失败")) {
             data = HttpUtil.sendReq(url,null,getToken());
-            userResp = JSONObject.parseObject(data, UserResp.class);
         }
+        UserResp userResp = JSONObject.parseObject(data, UserResp.class);
         logger.info("getUserInfo_result:"+userResp.toString());
         return userResp;
     }
@@ -53,11 +52,10 @@ public class DataInitUtil {
     public static InstanceIdResp initInstance(Map param)  {
         String url = "https://tworkflow.guoshou.com/api/bpm-api/submitInstance";
         String data = HttpUtil.sendReq(url,param,token);
-        InstanceIdResp instanceIdResp = JSONObject.parseObject(data, InstanceIdResp.class);
-        if (instanceIdResp == null || instanceIdResp.getCode() != 0) {
-            data = HttpUtil.sendReq(url,null,getToken());
-            instanceIdResp = JSONObject.parseObject(data, InstanceIdResp.class);
+        if (data.contains("accessToken验证失败")) {
+            data = HttpUtil.sendReq(url,param,getToken());
         }
+        InstanceIdResp instanceIdResp = JSONObject.parseObject(data, InstanceIdResp.class);
         logger.info("initInstance_result:"+instanceIdResp.toString());
         return instanceIdResp;
     }
