@@ -1,12 +1,28 @@
 package com.gstz.utils;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.*;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 
@@ -202,4 +218,60 @@ public class HttpUtil {
 		}
 		return result;
 	}
+
+	public static String sendReq(String url, Map<String, Object> map, String token)  {
+		// 创建自定义的SSLContext
+		SSLContext sslContext = null;
+		try {
+			sslContext = SSLContextBuilder.create()
+					.loadTrustMaterial((chain, authType) -> true) // 忽略所有证书验证错误
+					.build();
+		} catch (NoSuchAlgorithmException e) {
+			logger.info("证书验证错误:"+e.getMessage());
+			e.printStackTrace();
+		} catch (KeyManagementException e) {
+			logger.info("证书验证错误:"+e.getMessage());
+			e.printStackTrace();
+		} catch (KeyStoreException e) {
+			logger.info("证书验证错误:"+e.getMessage());
+			e.printStackTrace();
+		}
+
+		// 创建自定义的SSL连接工厂
+		SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
+
+		String respContent = "";
+		try {
+			RequestConfig requestConfig = RequestConfig.custom()
+					.setConnectTimeout(5000) // 连接超时时间
+					.setSocketTimeout(5000) // 读取超时时间
+					.build();
+
+			// 创建自定义的HttpClient
+			CloseableHttpClient httpclient = HttpClients.custom()
+					.setSSLSocketFactory(sslSocketFactory).setDefaultRequestConfig(requestConfig)
+					.build();
+
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setEntity(new StringEntity(JSONObject.toJSONString(map), "UTF-8"));
+			httpPost.setHeader("Accept", "*/*");
+			httpPost.setHeader("Content-type", "application/json");
+
+			httpPost.setConfig(requestConfig);
+
+			if(token!=null) {
+				httpPost.setHeader("accessToken",token);
+			}
+
+			HttpResponse resp = httpclient.execute(httpPost);
+			if (resp.getStatusLine().getStatusCode() == 200) {
+				HttpEntity he = resp.getEntity();
+				respContent = EntityUtils.toString(he, "UTF-8");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return respContent;
+	}
+
 }

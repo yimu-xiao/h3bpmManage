@@ -12,7 +12,7 @@ import java.util.Arrays;
 public enum ParamOfTzywxmxx {
 
     xm("xm","姓名"),
-    bm("bm","部门"),
+    bm("department","部门"),
     qtxmgs("qtxmgs","近三年牵头负责的划款项目个数"),
     qtxmgm("qtxmgm","近三年牵头负责的项目划款规模"),
     qtxmsfgm("qtxmsfgm","近三年牵头负责的项目第三方划款规模"),

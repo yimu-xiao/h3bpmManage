@@ -1,9 +1,12 @@
 package com.gstz.controller.poi;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.gstz.entity.enums.ParamOfTzywxmxx;
+import com.gstz.entity.request.user.UserResp;
+import com.gstz.utils.DataInitUtil;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.impl.NoOpLog;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -15,17 +18,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * @Author : yimu
  *   poi 读取表格数据 拼接JSON数据
  *   循环调用接口初始化流程
  * @create 2023/08/02
  */
-public class dealData {
+public class DealData {
 
-    static Logger logger = Logger.getLogger(dealData.class);
-
+    static Logger logger = Logger.getLogger(DealData.class);
 
     public static void main(String[] args) {
         try {
@@ -33,10 +34,10 @@ public class dealData {
             String fileName = "统计结果202306V1.xlsx";
             List<HashMap<String, Object>> list = readMergeExcel(
                     new FileInputStream(path), 0, 1, 0, fileName);
-            Gson gson = new Gson();
-            String json = gson.toJson(list);
-//            System.out.println(json);
-//            System.out.println("运行结束");
+//            for (HashMap<String, Object> stringObjectHashMap : list) {
+//                DataInitUtil.initInstance(stringObjectHashMap);
+//                return;
+//            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -89,19 +90,33 @@ public class dealData {
                 for (Cell c : row) {
                     String temp = getCellValue(c).replaceAll(" ","").trim();
                     if (param.get(c.getColumnIndex()) != null) {
-                        values.put(param.get(c.getColumnIndex()),temp);
+                        values.put(param.get(c.getColumnIndex()),
+                                param.get(c.getColumnIndex()).endsWith("gs")?temp.split("\\.")[0]:temp);
                     }
                 }
-                HashMap<Object, Object> lcInfo = new HashMap<>();
-                lcInfo.put("workflowCode","tzywxmxx");
-                lcInfo.put("finishStart",1);
-                lcInfo.put("paramValues",values);
-                lcInfo.put("userId","12843"); //用户中心唯一标识
-
-                Gson gson = new Gson();
-                String json = gson.toJson(lcInfo);
-                System.out.println(json);
-                paramValues.add(values);
+              try{
+                  HashMap<String, Object> lcInfo = new HashMap<>();
+                  lcInfo.put("workflowCode","tzywxmxx");
+                  lcInfo.put("finishStart",1);
+                  lcInfo.put("userId",11111111);
+                  lcInfo.put("paramValues",values);
+                  UserResp userInfo = DataInitUtil.getUserInfo(values.get("xm").toString());
+                  if (userInfo.getCode() == 0) {
+                      lcInfo.put("userId",userInfo.getData().getSourceID()); //用户中心唯一标识
+                      values.put("xm",userInfo.getData().getObjectID());
+                      values.put("department",userInfo.getData().getParentID());
+                      lcInfo.put("paramValues",values);
+                      Gson gson = new Gson();
+                      String json = gson.toJson(lcInfo);
+                      logger.info("拼接后json===》"+json);
+                      paramValues.add(lcInfo);
+                  }else{
+                      logger.info("未查询到用户信息==>"+values.get("xm"));
+                  }
+              }catch (Exception e) {
+                  logger.info("json拼接时出现异常==>"+values.get("xm"));
+                  e.printStackTrace();
+              }
             }
         } catch (Exception e) {
             e.printStackTrace();

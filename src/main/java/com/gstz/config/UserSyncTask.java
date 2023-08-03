@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gstz.entity.UserInfo;
 import com.gstz.entity.request.sso.SSOTokenResp;
 import com.gstz.service.UserInfoService;
-import com.gstz.entity.request.GetRequest;
+import com.gstz.utils.GetRequest;
 import com.gstz.utils.ApplicationContextUtil;
 import com.gstz.utils.StringUtil;
 import org.slf4j.Logger;
